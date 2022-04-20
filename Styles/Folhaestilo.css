@@ -1,0 +1,210 @@
+﻿/* General */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#form1 {
+    background-color: #fffafa;
+    height: 100vh;
+}
+
+/* Secondary container */
+
+.logo2 img {
+    width: 190px;
+    height: 90px;
+    position: absolute;
+    left: 45%;
+}
+
+div .secondary-container {
+    position: absolute;
+    left: 50%;
+}
+
+.secondary-container {
+    background-color: #1B7CEA;
+    height: 90px;
+}
+
+/* Tertiary container */
+
+.tertiary-container {
+    background-color: #137BF1;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+}
+
+li {
+    display: inline;
+}
+
+nav .menu {
+    text-align: center;
+    height: auto;
+    display: flex;
+    width: auto;
+}
+
+ul.menu li {
+    margin: 10px;
+    font-size: 16px;
+    display: block;
+    color: white;
+    padding: 2px;
+}
+
+nav ul.menu {
+    padding-right: 2px;
+    padding-left: 2px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+/* Cadastro */
+
+div .cadastro {
+    width: 100vw;
+    height: auto;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: center;
+}
+
+.cadastro {
+    width: 100vw;
+    height: auto;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: center;
+}
+
+.form_cadastro {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 10px;
+    max-height: 100%;
+    font-weight: bold;
+    height: 350px;
+}
+
+/* Botões */
+
+.botao {
+    width: 130px;
+    height: 30px;
+    border: none;
+    font-weight: bold;
+    color: white;
+    background-color: #6495ED;
+    border-bottom: 2px solid;
+    border-color: #4682B4;
+}
+
+    .botao:hover {
+        cursor: pointer;
+    }
+
+/* Registro consulta */
+
+.registro {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    border-radius: 10px;
+    width: 600px;
+    height: auto;
+    padding: 12px 16px;
+    background-color: #DCDCDC;
+    border-width: 2px 2px 2px 2px;
+    border-style: solid;
+    border-color: #C0C0C0;
+}
+
+/* Título */
+
+.title {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+div .campos_botao {
+    display: flex;
+    height: auto;
+    text-align: center;
+    width: 260px;
+    margin-left: 30%;
+}
+
+/* Login */
+
+div .image img {
+    width: 190px;
+    height: 90px;
+}
+
+div .image {
+    border-bottom: 1px solid white;
+}
+
+div .campos_login {
+    width: 300px;
+    background-color: #1B7CEA;
+    align-items: flex-start;
+    flex-direction: column;
+    border-radius: 10px;
+    height: auto;
+    padding: 12px 16px;
+    border-width: 2px 2px 2px 2px;
+    border-style: solid;
+    border-color: #137BF1;
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+    font-weight: bold;
+}
+
+.login {
+    background-color: #fffafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#form_login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 45vw;
+    background-color: #fffafa;
+}
+
+.botao_login {
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 30px;
+    font-weight: bold;
+    color: black;
+    background-color: #d6d6d6;
+}
+
+    .botao_login:hover {
+        cursor: pointer;
+    }

@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LOJA_ROUPASModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOME" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="RUA" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="NUMERO" Type="int" Nullable="false" />
+          <Property Name="BAIRRO" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="TELEFONE" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="CPF" Type="varchar" MaxLength="11" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LOGIN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USUARIO" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="SENHA" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="NOME" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="PRODUTOS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DESCRICAO" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="VALOR_UNITARIO" Type="float" Nullable="false" />
+          <Property Name="TAMANHO" Type="varchar" MaxLength="5" />
+          <Property Name="GENERO" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="REG_VENDAS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_PRODUTOS" Type="int" Nullable="false" />
+          <Property Name="QUANTIDADE" Type="int" Nullable="false" />
+          <Property Name="VALOR_TOTAL" Type="float" Nullable="false" />
+          <Property Name="ID_VENDAS" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="VENDAS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_CLIENTE" Type="int" Nullable="false" />
+          <Property Name="STATUS" Type="varchar" MaxLength="15" />
+          <Property Name="VALOR_TOTAL" Type="float" />
+          <Property Name="DATA" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_REG_VENDAS_PRODUTOS">
+          <End Role="PRODUTOS" Type="Self.PRODUTOS" Multiplicity="1" />
+          <End Role="REG_VENDAS" Type="Self.REG_VENDAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTOS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="REG_VENDAS">
+              <PropertyRef Name="ID_PRODUTOS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REG_VENDAS_VENDAS">
+          <End Role="VENDAS" Type="Self.VENDAS" Multiplicity="1" />
+          <End Role="REG_VENDAS" Type="Self.REG_VENDAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VENDAS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="REG_VENDAS">
+              <PropertyRef Name="ID_VENDAS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VENDAS_CLIENTE">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+          <End Role="VENDAS" Type="Self.VENDAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VENDAS">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LOJA_ROUPASModelStoreContainer">
+          <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOGIN" EntityType="Self.LOGIN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUTOS" EntityType="Self.PRODUTOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REG_VENDAS" EntityType="Self.REG_VENDAS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VENDAS" EntityType="Self.VENDAS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_REG_VENDAS_PRODUTOS" Association="Self.FK_REG_VENDAS_PRODUTOS">
+            <End Role="PRODUTOS" EntitySet="PRODUTOS" />
+            <End Role="REG_VENDAS" EntitySet="REG_VENDAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REG_VENDAS_VENDAS" Association="Self.FK_REG_VENDAS_VENDAS">
+            <End Role="VENDAS" EntitySet="VENDAS" />
+            <End Role="REG_VENDAS" EntitySet="REG_VENDAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VENDAS_CLIENTE" Association="Self.FK_VENDAS_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="VENDAS" EntitySet="VENDAS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LOJA_ROUPASModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RUA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NUMERO" Type="Int32" Nullable="false" />
+          <Property Name="BAIRRO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TELEFONE" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CPF" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="VENDAS" Relationship="Self.FK_VENDAS_CLIENTE" FromRole="CLIENTE" ToRole="VENDAS" />
+        </EntityType>
+        <EntityType Name="LOGIN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SENHA" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NOME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PRODUTOS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DESCRICAO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VALOR_UNITARIO" Type="Double" Nullable="false" />
+          <Property Name="TAMANHO" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="GENERO" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="REG_VENDAS" Relationship="Self.FK_REG_VENDAS_PRODUTOS" FromRole="PRODUTOS" ToRole="REG_VENDAS" />
+        </EntityType>
+        <EntityType Name="REG_VENDAS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_PRODUTOS" Type="Int32" Nullable="false" />
+          <Property Name="QUANTIDADE" Type="Int32" Nullable="false" />
+          <Property Name="VALOR_TOTAL" Type="Double" Nullable="false" />
+          <Property Name="ID_VENDAS" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PRODUTOS" Relationship="Self.FK_REG_VENDAS_PRODUTOS" FromRole="REG_VENDAS" ToRole="PRODUTOS" />
+          <NavigationProperty Name="VENDAS" Relationship="Self.FK_REG_VENDAS_VENDAS" FromRole="REG_VENDAS" ToRole="VENDAS" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="VENDAS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_CLIENTE" Type="Int32" Nullable="false" />
+          <Property Name="STATUS" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="VALOR_TOTAL" Type="Double" />
+          <NavigationProperty Name="CLIENTE" Relationship="Self.FK_VENDAS_CLIENTE" FromRole="VENDAS" ToRole="CLIENTE" />
+          <NavigationProperty Name="REG_VENDAS" Relationship="Self.FK_REG_VENDAS_VENDAS" FromRole="VENDAS" ToRole="REG_VENDAS" />
+          <Property Name="DATA" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_VENDAS_CLIENTE">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+          <End Role="VENDAS" Type="Self.VENDAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VENDAS">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REG_VENDAS_PRODUTOS">
+          <End Role="PRODUTOS" Type="Self.PRODUTOS" Multiplicity="1" />
+          <End Role="REG_VENDAS" Type="Self.REG_VENDAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTOS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="REG_VENDAS">
+              <PropertyRef Name="ID_PRODUTOS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REG_VENDAS_VENDAS">
+          <End Role="VENDAS" Type="Self.VENDAS" Multiplicity="1" />
+          <End Role="REG_VENDAS" Type="Self.REG_VENDAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VENDAS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="REG_VENDAS">
+              <PropertyRef Name="ID_VENDAS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LOJA_ROUPASEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" />
+          <EntitySet Name="LOGIN" EntityType="Self.LOGIN" />
+          <EntitySet Name="PRODUTOS" EntityType="Self.PRODUTOS" />
+          <EntitySet Name="REG_VENDAS" EntityType="Self.REG_VENDAS" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="VENDAS" EntityType="Self.VENDAS" />
+          <AssociationSet Name="FK_VENDAS_CLIENTE" Association="Self.FK_VENDAS_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="VENDAS" EntitySet="VENDAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REG_VENDAS_PRODUTOS" Association="Self.FK_REG_VENDAS_PRODUTOS">
+            <End Role="PRODUTOS" EntitySet="PRODUTOS" />
+            <End Role="REG_VENDAS" EntitySet="REG_VENDAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REG_VENDAS_VENDAS" Association="Self.FK_REG_VENDAS_VENDAS">
+            <End Role="VENDAS" EntitySet="VENDAS" />
+            <End Role="REG_VENDAS" EntitySet="REG_VENDAS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LOJA_ROUPASModelStoreContainer" CdmEntityContainer="LOJA_ROUPASEntities1">
+          <EntitySetMapping Name="CLIENTE">
+            <EntityTypeMapping TypeName="LOJA_ROUPASModel.CLIENTE">
+              <MappingFragment StoreEntitySet="CLIENTE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NOME" ColumnName="NOME" />
+                <ScalarProperty Name="RUA" ColumnName="RUA" />
+                <ScalarProperty Name="NUMERO" ColumnName="NUMERO" />
+                <ScalarProperty Name="BAIRRO" ColumnName="BAIRRO" />
+                <ScalarProperty Name="TELEFONE" ColumnName="TELEFONE" />
+                <ScalarProperty Name="CPF" ColumnName="CPF" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOGIN">
+            <EntityTypeMapping TypeName="LOJA_ROUPASModel.LOGIN">
+              <MappingFragment StoreEntitySet="LOGIN">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="USUARIO" ColumnName="USUARIO" />
+                <ScalarProperty Name="SENHA" ColumnName="SENHA" />
+                <ScalarProperty Name="NOME" ColumnName="NOME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUTOS">
+            <EntityTypeMapping TypeName="LOJA_ROUPASModel.PRODUTOS">
+              <MappingFragment StoreEntitySet="PRODUTOS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+                <ScalarProperty Name="VALOR_UNITARIO" ColumnName="VALOR_UNITARIO" />
+                <ScalarProperty Name="TAMANHO" ColumnName="TAMANHO" />
+                <ScalarProperty Name="GENERO" ColumnName="GENERO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REG_VENDAS">
+            <EntityTypeMapping TypeName="LOJA_ROUPASModel.REG_VENDAS">
+              <MappingFragment StoreEntitySet="REG_VENDAS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_PRODUTOS" ColumnName="ID_PRODUTOS" />
+                <ScalarProperty Name="QUANTIDADE" ColumnName="QUANTIDADE" />
+                <ScalarProperty Name="VALOR_TOTAL" ColumnName="VALOR_TOTAL" />
+                <ScalarProperty Name="ID_VENDAS" ColumnName="ID_VENDAS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="LOJA_ROUPASModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VENDAS">
+            <EntityTypeMapping TypeName="LOJA_ROUPASModel.VENDAS">
+              <MappingFragment StoreEntitySet="VENDAS">
+                <ScalarProperty Name="DATA" ColumnName="DATA" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="VALOR_TOTAL" ColumnName="VALOR_TOTAL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
